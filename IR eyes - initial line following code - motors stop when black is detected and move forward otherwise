@@ -1,0 +1,57 @@
+const int LEYE = 21;
+const int REYE = 13;
+const int IN1 = 3;
+const int IN2 = 2;
+const int IN3 = 9;
+const int IN4 = 10;
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode( LEYE, INPUT );
+  pinMode( REYE, INPUT );
+  pinMode(IN1, OUTPUT);//left motor 
+  pinMode(IN2, OUTPUT);//left motor
+  pinMode(IN3, OUTPUT);//right motor
+  pinMode(IN4, OUTPUT);//right motor 
+
+ 
+
+}
+
+void loop() {
+  if( digitalRead( LEYE ) == LOW ){
+    Serial.print("low - move forward");//low = no black line detected
+    //Move Forward
+    digitalWrite(IN1,HIGH);
+    digitalWrite(IN2,LOW);
+    
+    
+  }else{
+    //Reverse
+    Serial.print("high- black line detected STOP");
+    digitalWrite(IN1,LOW);//high = black line detected 
+    digitalWrite(IN2,LOW);
+   
+    
+   
+  }
+
+  if( digitalRead( REYE ) == LOW ){
+    Serial.println("low - move forward ");
+    //Move forward
+    
+    digitalWrite(IN3,HIGH);
+    digitalWrite(IN4,LOW);
+  }else{
+    Serial.println("high -black line detected STOP ");
+    //Reverse
+    
+    digitalWrite(IN3,LOW);
+    digitalWrite(IN4,LOW);
+    
+  }
+
+  
+ delay(1000);
+}
