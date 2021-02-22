@@ -1,0 +1,21 @@
+
+// The D0 of the Eye sensor is connected to Arduino pin D2
+const int REYE = 21;
+
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin( 9600 );
+  pinMode(REYE, INPUT);
+}
+
+void loop() {
+  bool all_clear = digitalRead( REYE );
+  
+  if( !all_clear ){
+    Serial.println("I see a line!");
+  }else{
+    Serial.println("Looks clear to me");
+  }
+  delay( 1000 );
+}
