@@ -1,0 +1,34 @@
+const int US_TRIG = 14;// arduino pin number
+const int US_ECHO = 15;// arduino pin number
+
+// The D0 of the Eye sensor is connected to Arduino pin D2
+const int LEYE = 13;
+
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin( 9600 );
+  pinMode(US_TRIG, OUTPUT);//send out signal to be reflected back
+  pinMode(US_ECHO, INPUT);// reads in a signal to calculate its distance away
+}
+
+void loop(){
+
+  int distance;
+  long duration;
+
+  digitalWrite( US_TRIG, LOW );
+  delayMicroseconds(2);
+  digitalWrite( US_TRIG, HIGH );
+  delayMicroseconds( 10 );
+  digitalWrite( US_TRIG, LOW );
+
+  duration = pulseIn( US_ECHO, HIGH );
+
+  distance = duration/58;
+ 
+  Serial.print("Distance detected: ");
+  Serial.print( distance );
+  Serial.println(" cm");
+  delay (1000);
+}
