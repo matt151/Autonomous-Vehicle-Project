@@ -1,0 +1,160 @@
+// In order to use PWM you must use the function analogWrite(pin_number,speed)
+// The pin connected doesnt have to be an analog pin, it can be digital but have analog function, allowing pwm. It will be marked with a ~ indicating so;
+// Set the PWM to 255 for 100% speed, 0 for a full stop;
+// To alter the speeds of each motor simply multiply PWM by x/100 of the desired change i.e 255 x 75/100 = 191.35. This motor will run at 75% of that of its max value; 
+// This means that when running at 191.25/255 (75%) it is not using the full 3.3 V supplied at max speed (255) but instead is using 3.3 V x 75% = 2.475; V 
+
+
+ 
+const int IN1 = 3;   // Left motor(sitting in it) positive (forward @ high)
+const int IN2 = 2;  //Left motor(sitting in it) negative (reverse @ high)
+const int IN3 = 9;  //Right motor(sitting in it) postive ( forward @ high)
+const int IN4 = 10; //Right motor(sitting in it) negative (reverse @ high)
+char user_input;
+
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+ 
+
+  
+  Serial.println("Enter number for control option:");
+  Serial.println("1. FORWARD");
+  Serial.println("2. REVERSE");
+  Serial.println("3. STOP");
+  Serial.println();  
+}
+
+void loop() 
+{
+  
+  while(Serial.available())
+  {
+    user_input = Serial.read();
+    /*
+    digitalWrite(IN1, LOW); //OFF
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3,LOW);
+    digitalWrite(IN4,LOW);*/
+
+    if (user_input =='1')
+    {
+      both_forward();
+  
+    }
+    else if(user_input =='2')
+    {
+      both_reverse();
+    }
+    else if(user_input =='3')
+    {
+      both_stop();
+    }
+    else if (user_input=='4')
+    { 
+      right_forward();
+    }
+    else if(user_input =='5')
+    {
+      left_forward();
+    }
+    else if(user_input =='6')
+    {
+      right_reverse();
+    }
+    else if(user_input =='7')
+    {
+      left_reverse();
+    }
+    else if(user_input =='8')
+    {
+      right_stop();
+    }
+    else if(user_input =='9')
+    {
+      left_stop();
+    }
+      Serial.println("Invalid option entered.");
+    }
+  }
+
+
+void both_forward ()
+{
+  //left motor forward
+  analogWrite(IN1,255);
+  analogWrite(IN2,0);
+
+   //right motor forward
+    analogWrite(IN3,255);
+    analogWrite(IN4,0);
+}
+
+void right_forward()
+{
+//right motor forward
+    analogWrite(IN3,255);
+    analogWrite(IN4,0);
+ }
+
+void left_forward()
+{
+  //left motor forward
+  analogWrite(IN1,255);
+  analogWrite(IN2,0);
+}
+
+void both_reverse()
+{
+  //left motor reverse
+  analogWrite(IN1,0);
+  analogWrite(IN2,255);
+
+   //right motor reverse
+    analogWrite(IN3,0);
+    analogWrite(IN4,255);
+}
+
+void right_reverse()
+{
+  //right motor revrse
+    analogWrite(IN3,0);
+    analogWrite(IN4,255);
+}
+
+void left_reverse()
+{
+  //left motor reverse
+  analogWrite(IN1,0);
+  analogWrite(IN2,255);
+  
+}
+
+void both_stop()
+{
+  //left motor stop
+  analogWrite(IN1,0);
+  analogWrite(IN2,0);
+
+   //right motor stop
+    analogWrite(IN3,0);
+    analogWrite(IN4,0);
+}
+
+void right_stop()
+{
+  //right motor stop
+    analogWrite(IN3,0);
+    analogWrite(IN4,0);
+}
+
+void left_stop()
+{
+  //left motor stop
+  analogWrite(IN1,0);
+  analogWrite(IN2,0);}
