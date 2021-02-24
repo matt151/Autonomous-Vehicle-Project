@@ -1,0 +1,63 @@
+// PWM involves using the analog pins in order to output a varying signal, rather than High or low, or in the case of PWM 255 or 0. 
+// Speed and direction can be controlled using PWM to change the speed the respective motor travels at by changing the voltage input to it
+// PWM operates with 255 as a max and 0 as the min. This means that if the PWM value is 255 the full amount of available voltage and current is being applied to the motor. In this case this value is 5V.
+// In order to change the speed of the motor all you have to do is change the voltage input to the motor. E.g you want the motor to travel slower and have an input of 4 V, 4V/5V = 0.8 so multiply 255 x 0.8 to get the PWM value for an input of 4V = 204.
+
+const int enA= 17;
+const int enB = 16;
+ const int LEYE = 21;
+const int REYE = 13;
+const int IN1 = 3;   // Left motor(sitting in it) positive (forward @ high)
+const int IN2 = 2;  //Left motor(sitting in it) negative (reverse @ high)
+const int IN3 = 9;  //Right motor(sitting in it) postive ( forward @ high)
+const int IN4 = 10; //Right motor(sitting in it) negative (reverse @ high)
+char user_input;
+
+
+void setup()
+{
+
+  pinMode( LEYE, INPUT );
+  pinMode( REYE, INPUT );
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+ 
+}
+
+void loop() {
+
+if (digitalRead(LEYE)==LOW){
+ Serial.print("low - move forward");//low = no black line detected
+   analogWrite(enA,255);
+  digitalWrite(IN1,HIGH);
+  digitalWrite(IN2,LOW);
+}
+else { 
+  Serial.print("high- black line detected STOP");
+    analogWrite(enA,0);
+  digitalWrite(IN1,HIGH);
+  digitalWrite(IN2,LOW);
+  
+}
+ if (digitalRead(REYE)==LOW){
+  
+   //right motor forward
+   analogWrite(enB,255);
+    digitalWrite(IN3,HIGH);
+     digitalWrite(IN4,LOW);
+}
+    
+ 
+  else{
+    //stop
+    Serial.print("high- black line detected STOP");
+    
+   analogWrite(enB,0);
+    digitalWrite(IN3,HIGH);
+     digitalWrite(IN4,LOW);
+   
+
+}
+}
